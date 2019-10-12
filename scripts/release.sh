@@ -29,5 +29,11 @@ body=$(cat << EOF
 EOF
 )
 
-curl -sSLv -X POST -d "$body" -H "Authorization: token $GITHUB_TOKEN" \
-    "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases"
+id=$(curl -sSL -X POST -d "$body" -H "Authorization: token $GITHUB_TOKEN" \
+    "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases" \
+    | python -c "import sys,json; print(json.load(sys.stdin).get('id'))")
+
+curl -sSL -X POST --data-binary @release/binary-release-$version.tag.gz \
+     -H "Authorization: token $GITHUB_TOKEN" \
+     -H "Content-Type: application/tar+gzip" \
+     "https://uploads.github.com/repos/bassaer/binary-release/releases/$id/assets?name=binary-release-$version.tag.gz&label=binary%20(tar.gz)"
