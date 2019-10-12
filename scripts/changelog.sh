@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function usage {
-
   cat <<EOF
 Usage: $(basename "$0") [OPTION]...
   -v          version name
