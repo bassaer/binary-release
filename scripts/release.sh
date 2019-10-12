@@ -7,10 +7,10 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     exit 0
 fi
 
-curr_ver=$(git describe --tags --abbrev=0 || echo -n)
+curr_ver=$(git describe --tags --abbrev=0 || true)
 next_ver=$(scripts/changelog.sh -v)
-if [ $curr_ver = $next_ver ]; then
-    echo 'skip bump version'
+if [ "$curr_ver" = "$next_ver" ]; then
+    echo 'skip relsease beacase version is same.'
     exit 0
 fi
 
@@ -29,6 +29,5 @@ body=$(cat << EOF
 EOF
 )
 
-curl -X POST -d "$body" -H "Authorization: token $GITHUB_TOKEN" \
-    "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases" \
-    > /dev/null 2>&1
+curl -sSLv -X POST -d "$body" -H "Authorization: token $GITHUB_TOKEN" \
+    "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases"
