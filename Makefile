@@ -18,4 +18,4 @@ package:
 	tar zcvf release/${DIST}.tag.gz ${DIST}
 
 clean:
-	rm -f ./${BASE}-*
+	rm -rf ./${BASE}-* ./release
