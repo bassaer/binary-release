@@ -24,7 +24,7 @@ func version(path string) string {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if strings.HasPrefix(line, "## Ver") {
+		if strings.HasPrefix(line, "## ver") {
 			return extract(line)
 		}
 	}
