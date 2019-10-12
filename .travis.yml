@@ -1,0 +1,16 @@
+language: go
+branches:
+  only:
+    - master
+go:
+  - 1.11.x
+  - 1.12.x
+env:
+  - GO111MODULE=on
+before_install:
+  - go mod download
+  - go get -v golang.org/x/lint/golint
+deploy:
+  provider: script
+  script: scripts/release.sh
+  skip_cleanup: true
