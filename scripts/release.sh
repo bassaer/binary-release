@@ -7,7 +7,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     exit 0
 fi
 
-curr_ver=$(git describe --tags --abbrev=0 || true)
+curr_ver=$(git describe --tags --abbrev=0 || echo -n)
 next_ver=$(scripts/changelog.sh -v)
 if [ $curr_ver = $next_ver ]; then
     echo 'skip bump version'
