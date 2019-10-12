@@ -4,6 +4,8 @@ BASE = $(shell basename ${PWD})
 VERSION = $(shell ./scripts/changelog.sh -v)
 DIST = ${BASE}-${VERSION}
 
+all: clean build package
+
 build:
 	go build -o ${DIST} ./...
 
